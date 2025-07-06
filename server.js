@@ -16,7 +16,7 @@ app.use(express.json());
 // app.use(cors());
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL] || `https://project-frontend-livid.vercel.app/`
+    ? [process.env.FRONTEND_URL] || `https://project-frontend-eight-pi.vercel.app/`
     : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'], // Development frontend URLs (Vite)
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
