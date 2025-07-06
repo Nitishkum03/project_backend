@@ -13,15 +13,16 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL] // Production frontend URL
-    : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'], // Development frontend URLs (Vite)
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  maxAge: 86400 // 24 hours
-}));
+app.use(cors());
+// app.use(cors({
+//   origin: process.env.NODE_ENV === 'production' 
+//     ? [process.env.FRONTEND_URL] || `https://project-frontend-livid.vercel.app/`
+//     : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'], // Development frontend URLs (Vite)
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true,
+//   maxAge: 86400 // 24 hours
+// }));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/todo-app', {
@@ -46,6 +47,8 @@ app.get('/', (req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-}); 
+// Ensure PORT is a number, not a URL
+const portNumber = parseInt(PORT) || 5000;
+app.listen(portNumber, () => {
+  console.log(`Server is running on port ${portNumber}`);
+});
